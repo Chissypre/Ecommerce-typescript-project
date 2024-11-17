@@ -1,6 +1,7 @@
 import { Routes as ReactRoutes, Route } from "react-router-dom";
 import Layout from "./layouts/Layout";
 import MyAccount from "./pages/myAccount";
+import Shop from "./pages/Shop";
 
 
 const Routes = () => {
@@ -9,8 +10,16 @@ const Routes = () => {
             <Route
                 path="/"
                 element={
-                    <Layout>
+                    <Layout heroTitle="My Account">
                         <MyAccount />
+                    </Layout>
+                }
+            />
+            <Route
+                path="/shop"
+                element={
+                    <Layout heroTitle="Shop">
+                        <Shop />
                     </Layout>
                 }
             />

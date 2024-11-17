@@ -6,14 +6,15 @@ import "react-toastify/dist/ReactToastify.css";
 
 interface Props {
     children: React.ReactNode;
+    heroTitle: string;
 }
 
-const Layout = ({ children }: Props) => {
+const Layout = ({ children, heroTitle }: Props) => {
     return (
         <div className="flex flex-col min-h-screen">
             <Header />
-            <div className="mt-16"> {/* Add top margin equal to header height */}
-                <Hero />
+            <div className="mt-16">
+                <Hero title={heroTitle} />
                 <div className="toast-container">
                     <ToastContainer
                         position="top-right"

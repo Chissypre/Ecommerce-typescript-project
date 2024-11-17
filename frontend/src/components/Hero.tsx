@@ -2,7 +2,11 @@ import HeroImage from "../assets/Hero.svg";
 import Logo from "../assets/Logo.svg";
 import Greaterthan from "../assets/Greaterthan.svg";
 
-const Hero: React.FC = () => {
+interface HeroProps {
+    title: string;
+}
+
+const Hero: React.FC<HeroProps> = ({ title }) => {
     return (
         <div className="relative flex items-center justify-center h-[25vh] sm:h-[35vh] md:h-[45vh] lg:h-[55vh]">
             <img
@@ -20,7 +24,7 @@ const Hero: React.FC = () => {
 
                 {/* Adjust heading size for responsiveness */}
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium text-black pb-1">
-                    My Account
+                    {title}
                 </h1>
 
                 {/* Breadcrumbs section */}
@@ -32,7 +36,7 @@ const Hero: React.FC = () => {
                         alt="Greater than icon"
                     />
 
-                    <p className="text-xs sm:text-sm md:text-base lg:text-lg font-light">My Account</p>
+                    <p className="text-xs sm:text-sm md:text-base lg:text-lg font-light">{title}</p>
                 </div>
             </div>
         </div>
