@@ -4,7 +4,7 @@ import { useAppContext } from "../contexts/AppContext";
 import SignOutButton from "./SignOutButton";
 
 export const Header = () => {
-    const { isLoggedIn, userName } = useAppContext();
+    const { isLoggedIn, userName, isAdmin } = useAppContext();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleMenu = () => {
@@ -20,6 +20,11 @@ export const Header = () => {
                 <Link to="/shop" className="text-sm text-black px-2">Shop</Link>
                 <Link to="/about" className="text-sm text-black px-2">About</Link>
                 <Link to="/contact" className="text-sm text-black px-2">Contact</Link>
+                {isAdmin && (
+                    <Link to="/admin" className="text-sm text-red-500 px-2 font-bold">
+                        Admin
+                    </Link>
+                )}
 
 
             </div>
@@ -86,6 +91,11 @@ export const Header = () => {
                         <Link to="/shop" className="text-sm text-black" onClick={toggleMenu}>Shop</Link>
                         <Link to="/about" className="text-sm text-black" onClick={toggleMenu}>About</Link>
                         <Link to="/contact" className="text-sm text-black" onClick={toggleMenu}>Contact</Link>
+                        {isAdmin && (
+                            <Link to="/admin" className="text-sm text-red-500 px-2 font-bold">
+                                Admin
+                            </Link>
+                        )}
                     </div>
                 </div>
             )}

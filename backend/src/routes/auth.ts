@@ -35,7 +35,7 @@ router.post(
                 res.status(400).json({ message: "Invalid Password" });
             }
             const token = jwt.sign(
-                { userId: user!.id },
+                { userId: user!.id, role: user!.role },
                 process.env.JWT_SECRET_KEY as string,
                 {
                     expiresIn: "1d",
@@ -57,12 +57,18 @@ router.post(
 
 router.get("/validate-token", verifyToken, async (req: Request, res: Response) => {
     const userId = req.userId;
+    const userRole = req.userRole;
     const user = await User.findById(userId);
     if (!user) {
         return res.status(404).json({ message: "User not found" });
     }
-    res.status(200).json({ userId: user._id, name: user.firstName });
+    res.status(200).json({
+        userId: user._id,
+        name: user.firstName,
+        role: userRole
+    });
 });
+
 
 
 router.post("/logout", (req: Request, res: Response) => {

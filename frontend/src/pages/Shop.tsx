@@ -1,4 +1,5 @@
 import Filter from "../components/Filter"
+import Pagination from "../components/Pagination"
 import ShopListItems from "../components/ShopListItems"
 
 const Shop = () => {
@@ -6,6 +7,7 @@ const Shop = () => {
         <div>
             <Filter />
             <ShopListItems />
+            <Pagination />
 
         </div>
     )

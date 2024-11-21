@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { httpLogout } from "../api/signin";
-
 const SignOutButton = () => {
     const queryClient = useQueryClient();
     const mutation = useMutation(httpLogout, {
         onSuccess: async () => {
+
             await queryClient.invalidateQueries("validateToken");
             toast.success("Signed Out");
         },
@@ -13,9 +13,11 @@ const SignOutButton = () => {
             toast.error(error.message);
         },
     });
+
     const handleClick = () => {
         mutation.mutate();
     };
+
     return (
         <button
             onClick={handleClick}
