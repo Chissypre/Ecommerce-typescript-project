@@ -3,6 +3,7 @@ import Layout from "./layouts/Layout";
 import MyAccount from "./pages/myAccount";
 import Shop from "./pages/Shop";
 import AddMyProduct from "./pages/myProduct";
+import ShopListDetail from "./components/ShopListItems/ShopListDetail";
 
 
 
@@ -33,6 +34,11 @@ const Routes = () => {
                     </Layout>
                 }
             />
+            <Route path="/shop/:productId" element={
+                <Layout heroTitle="Shop">
+                    <ShopListDetail />
+                </Layout>
+            } />
         </ReactRoutes>
 
     )

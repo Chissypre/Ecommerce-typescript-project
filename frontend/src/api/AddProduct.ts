@@ -1,4 +1,5 @@
 import { API_BASE_URL } from "../utilities/constants";
+import { shopListType } from "../utilities/Types";
 
 
 
@@ -10,6 +11,30 @@ export const httpAddMyProduct = async (productFormData: FormData) => {
     });
     if (!response.ok) {
         throw new Error("Failed to add product");
+    }
+
+    return response.json();
+};
+
+export const httpGetMyProduct = async (): Promise<shopListType[]> => {
+    const response = await fetch(`${API_BASE_URL}/api/my-products`, {
+        credentials: "include",
+    });
+    if (!response.ok) {
+        throw new Error("Error fetching product");
+    }
+
+    return response.json();
+};
+
+export const httpGetMyProductById = async (
+    productId: string
+): Promise<shopListType> => {
+    const response = await fetch(`${API_BASE_URL}/api/my-products/${productId}`, {
+        credentials: "include",
+    });
+    if (!response.ok) {
+        throw new Error("Error fetching product");
     }
 
     return response.json();

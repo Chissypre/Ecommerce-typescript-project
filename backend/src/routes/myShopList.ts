@@ -74,7 +74,28 @@ router.post(
     }
 );
 
+router.get("/", async (req: Request, res: Response) => {
+    try {
+        const ShopLists = await ShopList.find();
+        res.json(ShopLists);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error Fetching Products" });
+    }
+});
 
+router.get("/:id", async (req: Request, res: Response) => {
+    const id = req.params.id.toString();
+    try {
+        const product = await ShopList.findOne({
+            _id: id,
+        });
+        res.json(product);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Error Fetching Product" });
+    }
+});
 
 // Function to Upload Images to Cloudinary
 async function uploadImages(imageFiles: Express.Multer.File[]) {
