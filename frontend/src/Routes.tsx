@@ -4,6 +4,7 @@ import MyAccount from "./pages/myAccount";
 import Shop from "./pages/Shop";
 import AddMyProduct from "./pages/myProduct";
 import ShopListDetail from "./components/ShopListItems/ShopListDetail";
+import { Home } from "./pages/Home";
 
 
 
@@ -12,6 +13,14 @@ const Routes = () => {
         <ReactRoutes>
             <Route
                 path="/"
+                element={
+                    <Layout heroTitle="Home">
+                        <Home />
+                    </Layout>
+                }
+            />
+            <Route
+                path="/sign-In"
                 element={
                     <Layout heroTitle="My Account">
                         <MyAccount />

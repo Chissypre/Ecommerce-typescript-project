@@ -16,7 +16,7 @@ export const Header = () => {
             {/* Links for desktop view */}
             <div className="hidden md:flex flex-col items-center md:flex-row md:space-x-8 justify-center flex-grow ">
 
-                <Link to="/home" className="text-sm text-black px-2">Home</Link>
+                <Link to="/" className="text-sm text-black px-2">Home</Link>
                 <Link to="/shop" className="text-sm text-black px-2">Shop</Link>
                 <Link to="/about" className="text-sm text-black px-2">About</Link>
                 <Link to="/contact" className="text-sm text-black px-2">Contact</Link>
