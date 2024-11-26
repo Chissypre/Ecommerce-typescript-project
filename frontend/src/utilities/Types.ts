@@ -41,6 +41,6 @@ export type productFormData = {
     tags: string[];
     availableSizes: string[];
     availableColors: string[];
-    imageFiles: FileList;
-    imageUrls: string[];
+    imageFiles: File[];  // Array of File objects for uploaded files
+    imageUrls: string[]; // Array of URLs for image previews
 };
