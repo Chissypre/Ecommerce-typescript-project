@@ -1,10 +1,10 @@
-import { httpGetMyProduct } from "../../api/AddProduct";
+import { httpGetProduct } from "../../api/AddProduct";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
 const ShopListItems = () => {
-    const { data: productData } = useQuery("fetchMyProducts", httpGetMyProduct, {
+    const { data: productData } = useQuery("fetchProducts", httpGetProduct, {
         onError: (error: Error) => {
             toast.error(error.message);
         },

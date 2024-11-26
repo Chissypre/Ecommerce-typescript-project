@@ -16,7 +16,7 @@ export const httpAddMyProduct = async (productFormData: FormData) => {
     return response.json();
 };
 
-export const httpGetMyProduct = async (): Promise<shopListType[]> => {
+export const httpGetProduct = async (): Promise<shopListType[]> => {
     const response = await fetch(`${API_BASE_URL}/api/my-products`, {
         credentials: "include",
     });
@@ -27,7 +27,7 @@ export const httpGetMyProduct = async (): Promise<shopListType[]> => {
     return response.json();
 };
 
-export const httpGetMyProductById = async (
+export const httpGetProductById = async (
     productId: string
 ): Promise<shopListType> => {
     const response = await fetch(`${API_BASE_URL}/api/my-products/${productId}`, {
@@ -35,6 +35,22 @@ export const httpGetMyProductById = async (
     });
     if (!response.ok) {
         throw new Error("Error fetching product");
+    }
+
+    return response.json();
+};
+
+export const httpUpdateMyProductById = async (productFormData: FormData) => {
+    const response = await fetch(
+        `${API_BASE_URL}/api/my-products/${productFormData.get("productId")}`,
+        {
+            method: "PUT",
+            body: productFormData,
+            credentials: "include",
+        }
+    );
+    if (!response.ok) {
+        throw new Error("Failed to Update Product");
     }
 
     return response.json();

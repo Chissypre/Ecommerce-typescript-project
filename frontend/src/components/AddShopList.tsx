@@ -2,17 +2,17 @@ import { useForm, FormProvider } from "react-hook-form";
 import { AvailableSizes } from "./AddShopComponents/AvailableSizes";
 import AvailableColors from "./AddShopComponents/AvailableColors";
 import ImageUpload from "./AddShopComponents/ImageUpload";
-import { ProductDataType, shopListType } from "../utilities/Types";
+import { productFormData, shopListType } from "../utilities/Types";
 import { useEffect } from "react";
 
 type Props = {
     product?: shopListType;
-    onSave: (ProductDataType: FormData) => void;
+    onSave: (productFormData: FormData) => void;
     isLoading: boolean;
 };
 
 const AddProductForm = ({ onSave, isLoading, product }: Props) => {
-    const formMethods = useForm<ProductDataType>();
+    const formMethods = useForm<productFormData>();
 
     const {
         register,
@@ -20,12 +20,13 @@ const AddProductForm = ({ onSave, isLoading, product }: Props) => {
         reset,
         formState: { errors },
     } = formMethods;
+
     useEffect(() => {
-        reset(product)
-    }, [product, reset])
-
-
-    const onSubmit = handleSubmit((data: ProductDataType) => {
+        if (product) {
+            reset(product);
+        }
+    }, [product, reset]);
+    const onSubmit = handleSubmit((data: productFormData) => {
         const formData = new FormData();
 
         if (product) {
@@ -40,13 +41,25 @@ const AddProductForm = ({ onSave, isLoading, product }: Props) => {
         // Serialize JSON fields
         formData.append("tags", JSON.stringify(data.tags));
         formData.append("category", data.category);
-        formData.append("availableSizes", JSON.stringify(data.availableSizes));
-        formData.append("availableColors", JSON.stringify(data.availableColors));
+
+        data.availableSizes.forEach((size, index) => {
+            formData.append(`availableSizes[${index}]`, size);
+        });
+        data.availableColors.forEach((color, index) => {
+            formData.append(`availableColors[${index}]`, color);
+        });
 
         // Append files
-        data.imageFiles.forEach((file) => {
-            formData.append("imageFiles", file);
-        });
+        if (data.imageUrls) {
+            data.imageUrls.forEach((url, index) => {
+                formData.append(`imageUrls[${index}]`, url)
+            })
+        }
+
+        Array.from(data.imageFiles).forEach((imageFile) => {
+            formData.append(`imageFiles`, imageFile)
+
+        })
 
         onSave(formData);
     });

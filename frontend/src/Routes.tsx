@@ -5,6 +5,7 @@ import Shop from "./pages/Shop";
 import AddMyProduct from "./pages/myProduct";
 import ShopListDetail from "./components/ShopListItems/ShopListDetail";
 import { Home } from "./pages/Home";
+import EditProduct from "./pages/EditProduct";
 
 
 
@@ -48,6 +49,14 @@ const Routes = () => {
                     <ShopListDetail />
                 </Layout>
             } />
+            <Route
+                path="/edit-product/:productId"
+                element={
+                    <Layout heroTitle="Edit Product">
+                        <EditProduct />
+                    </Layout>
+                }
+            />
         </ReactRoutes>
 
     )

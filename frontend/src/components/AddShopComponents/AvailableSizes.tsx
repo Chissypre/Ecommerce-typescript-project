@@ -1,54 +1,37 @@
 import { useFormContext } from "react-hook-form";
-import { ProductDataType } from "../../utilities/Types";
+import { productFormData } from "../../utilities/Types";
+import { sizeTypes } from "../../config/productConfig";
 
 
 export const AvailableSizes = () => {
-    const {
-        register,
-        setValue,
-        watch,
-        formState: { errors },
-    } = useFormContext<ProductDataType>();
-
-    const availableSizes = watch("availableSizes") || [];
-
-    const toggleSizeSelection = (size: string) => {
-        const updatedSizes = availableSizes.includes(size)
-            ? availableSizes.filter((s) => s !== size)
-            : [...availableSizes, size];
-        setValue("availableSizes", updatedSizes, { shouldValidate: true });
-    };
+    const { register, formState: { errors } } = useFormContext<productFormData>()
 
     return (
         <div>
             <h2 className="text-xl font-semibold mb-4">Available Sizes</h2>
             <div className="flex flex-wrap gap-2">
-                {["XS", "S", "M", "L", "XL", "XXL"].map((size) => (
-                    <label
-                        key={size}
-                        className="text-sm flex items-center gap-2 cursor-pointer"
-                    >
-                        <input
-                            type="checkbox"
-                            value={size}
-                            checked={availableSizes.includes(size)}
-                            {...register("availableSizes", {
-                                validate: (sizes) =>
-                                    sizes.length > 0 ||
-                                    "Please select at least one size.",
-                            })}
-                            onChange={() => toggleSizeSelection(size)}
+                {sizeTypes.map((size) => (
+                    <label className="text-sm flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" value={size}
                             className="form-checkbox h-5 w-5 text-green-500"
+                            {...register("availableSizes", {
+                                validate: (availableSizes) => {
+                                    if (availableSizes && availableSizes.length > 0) {
+                                        return true
+                                    } else {
+                                        return "At least one size is required"
+                                    }
+                                },
+                            })}
                         />
                         {size}
                     </label>
                 ))}
             </div>
             {errors.availableSizes && (
-                <p className="text-red-500 text-sm mt-1">
-                    {errors.availableSizes.message}
-                </p>
+                <span className="text-red-500 text-sm mt-1">{errors.availableSizes.message}</span>
             )}
+
         </div>
     );
 };

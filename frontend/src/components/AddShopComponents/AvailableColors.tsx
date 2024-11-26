@@ -1,24 +1,15 @@
 import { useFormContext } from "react-hook-form";
-import { ProductDataType } from "../../utilities/Types";
+import { productFormData } from "../../utilities/Types";
+import { colorOptions } from "../../config/productConfig";
 
 const AvailableColors = () => {
     const {
         register,
-        setValue,
         watch,
         formState: { errors },
-    } = useFormContext<ProductDataType>();
+    } = useFormContext<productFormData>();
 
-    const availableColors = watch("availableColors") || [];
-    const colorOptions = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FFA500", "#800080"]; // Example colors
-
-    const toggleColorSelection = (color: string) => {
-        const updatedColors = availableColors.includes(color)
-            ? availableColors.filter((c) => c !== color)
-            : [...availableColors, color];
-
-        setValue("availableColors", updatedColors, { shouldValidate: true });
-    };
+    const colorWatch = watch("availableColors") || []; // Default to an empty array if undefined
 
     return (
         <div>
@@ -32,21 +23,23 @@ const AvailableColors = () => {
                         <input
                             type="checkbox"
                             value={color}
-                            checked={availableColors.includes(color)}
+                            className="hidden peer"
                             {...register("availableColors", {
-                                validate: (colors) =>
-                                    colors.length > 0 ||
-                                    "Please select at least one color.",
+                                validate: (availableColors) => {
+                                    if (availableColors && availableColors.length > 0) {
+                                        return true;
+                                    } else {
+                                        return "At least one color is required";
+                                    }
+                                },
                             })}
-                            onChange={() => toggleColorSelection(color)}
-                            className="hidden"
                         />
                         <span
-                            className={`w-10 h-10 rounded-full border-2 transition ${availableColors.includes(color)
+                            className={`w-10 h-10 rounded-full border-2 transition ${colorWatch.includes(color)
                                 ? "border-green-500"
                                 : "border-gray-300"
                                 }`}
-                            style={{ backgroundColor: color }}
+                            style={{ backgroundColor: color }} // Dynamically set background color
                         ></span>
                     </label>
                 ))}
@@ -61,5 +54,3 @@ const AvailableColors = () => {
 };
 
 export default AvailableColors;
-
-

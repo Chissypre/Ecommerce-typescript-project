@@ -97,6 +97,31 @@ router.get("/:id", async (req: Request, res: Response) => {
     }
 });
 
+router.put("/:productId", verifyToken,
+    verifyAdmin, upload.array("imageFiles"),
+    async (req: Request, res: Response) => {
+        try {
+            const updatedProduct: shopListType = req.body
+            updatedProduct.lastUpdated = new Date()
+            const product = await ShopList.findOneAndUpdate({
+                _id: req.params.productId,
+            }, updatedProduct, { new: true });
+            if (!product) {
+                return res.status(404).json({ message: "Product not found" })
+            }
+            const files = req.files as Express.Multer.File[];
+            const updatedImageUrls = await uploadImages(files)
+            product.imageUrls = [...updatedImageUrls, ...(updatedProduct.imageUrls || [])]
+            await product.save()
+            res.status(201).json(product);
+        } catch (error) {
+            res.status(500).json({ message: "Error Fetching Products" });
+        }
+    });
+
+
+
+
 // Function to Upload Images to Cloudinary
 async function uploadImages(imageFiles: Express.Multer.File[]) {
     const uploadPromises = imageFiles.map(async (image) => {

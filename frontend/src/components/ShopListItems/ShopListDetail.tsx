@@ -1,29 +1,21 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
-import { httpGetMyProductById } from "../../api/AddProduct";
+import { httpGetProductById } from "../../api/AddProduct";
 import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, Key } from "react";
+import { useAppContext } from "../../contexts/AppContext";
+
 
 const ShopListDetail = () => {
+    const { isAdmin } = useAppContext();
     const { productId } = useParams();
-
-    const { data: product, isLoading } = useQuery(
-        ["fetchMyProductById", productId],
-        () => httpGetMyProductById(productId || ""),
-        {
-            enabled: !!productId,
-        }
-    );
-
-    if (isLoading) {
-        return <div className="text-center mt-10">Loading...</div>;
+    const { data: product } = useQuery("fetchProductById", () => httpGetProductById(productId as string), {
+        enabled: !!productId
     }
-
+    )
     if (!product) {
-        return <div className="text-center mt-10">Product not found!</div>;
+        return <>
+        </>
     }
-
-    // Log the availablecolor to the console
-    console.log(product.availableColors);
 
     return (
         <div className="container mx-auto p-4 flex flex-col lg:flex-row gap-8 overflow-x-hidden">
@@ -161,8 +153,12 @@ const ShopListDetail = () => {
                     <button>
                         <i className="fab fa-twitter text-xl text-gray-600"></i>
                     </button>
+                    {isAdmin && (
+                        <Link to={`/edit-product/${product._id}`} className="flex bg-amber-300 text-black hover:text-gray-400 text-xl font-bold px-3 py-2 hover:bg-amber-200 rounded-md border border-gray-300">Edit Product</Link>
+                    )}
                 </div>
             </div>
+
         </div>
     );
 };

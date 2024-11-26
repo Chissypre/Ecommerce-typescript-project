@@ -32,7 +32,7 @@ export type shopListType = {
     lastUpdated: Date;
 };
 
-export type ProductDataType = {
+export type productFormData = {
     name: string;
     description: string;
     price: number;
@@ -41,5 +41,6 @@ export type ProductDataType = {
     tags: string[];
     availableSizes: string[];
     availableColors: string[];
-    imageFiles: File[];
+    imageFiles: FileList;
+    imageUrls: string[];
 };
