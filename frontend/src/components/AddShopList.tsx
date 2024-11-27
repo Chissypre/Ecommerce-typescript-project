@@ -40,6 +40,8 @@ const AddProductForm = ({ onSave, isLoading, product }: Props) => {
 
         // Serialize JSON fields
         formData.append("tags", JSON.stringify(data.tags));
+
+
         formData.append("category", data.category);
 
         data.availableSizes.forEach((size, index) => {

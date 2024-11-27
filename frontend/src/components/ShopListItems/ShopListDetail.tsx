@@ -138,8 +138,13 @@ const ShopListDetail = () => {
                     </p>
                     <p>
                         <span className="font-medium">Tags:</span>{" "}
-                        {product.tags?.join(", ") || "No tags available"}
+                        {product.tags?.length > 0
+                            ? product.tags.map(tag => tag.replace(/"/g, "")).join(", ")
+                            : "No tags available"}
                     </p>
+
+
+
                 </div>
 
                 {/* Share Options */}
