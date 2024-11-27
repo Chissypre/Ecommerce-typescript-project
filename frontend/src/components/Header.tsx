@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useAppContext } from "../contexts/AppContext";
 import SignOutButton from "./SignOutButton";
@@ -6,13 +6,26 @@ import SignOutButton from "./SignOutButton";
 export const Header = () => {
     const { isLoggedIn, userName, isAdmin } = useAppContext();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const location = useLocation();
+
+    // Check if the current route is the home page
+    const isHomePage = location.pathname === "/";
+
+
+    const buttonBgColor = isHomePage
+        ? "bg-amberLight"  // Apply amber color on homepage
+        : "bg-white";     // Default background
+
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
     return (
-        <div className="fixed top-0 left-0 w-full bg-white shadow-md z-50 h-16 px-4 flex justify-between items-center">
+        <div
+            className={`fixed top-0 left-0 w-full z-50 h-16 px-4 flex justify-between items-center ${isHomePage ? "bg-amberLight" : "bg-white"
+                }`}
+        >
             {/* Links for desktop view */}
             <div className="hidden md:flex flex-col items-center md:flex-row md:space-x-8 justify-center flex-grow ">
 
@@ -69,12 +82,12 @@ export const Header = () => {
                 {isLoggedIn ? (
                     <>
 
-                        <SignOutButton />
+                        <SignOutButton bgColor={buttonBgColor} /> {/* Pass bgColor prop here */}
                     </>
                 ) : (
                     <Link
                         to="/sign-In"
-                        className="flex items-center text-black px-3 font-bold hover:bg-gray-100 bg-white"
+                        className={`flex items-center text-black px-3 font-bold hover:bg-gray-100 ${buttonBgColor}`}
                     >
                         Sign In
                     </Link>

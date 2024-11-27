@@ -15,7 +15,7 @@ const Routes = () => {
             <Route
                 path="/"
                 element={
-                    <Layout heroTitle="Home">
+                    <Layout heroTitle="Home" showHero={false}>
                         <Home />
                     </Layout>
                 }

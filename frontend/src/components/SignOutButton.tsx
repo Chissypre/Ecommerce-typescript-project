@@ -1,7 +1,12 @@
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { httpLogout } from "../api/signin";
-const SignOutButton = () => {
+
+interface SignOutButtonProps {
+    bgColor: string;
+}
+
+const SignOutButton = ({ bgColor }: SignOutButtonProps) => {
     const queryClient = useQueryClient();
     const mutation = useMutation(httpLogout, {
         onSuccess: async () => {
@@ -21,7 +26,7 @@ const SignOutButton = () => {
     return (
         <button
             onClick={handleClick}
-            className="text-black md:px-1 font-bold bg-white hover:bg-gray-100 whitespace-nowrap"
+            className={`text-black md:px-1 font-bold ${bgColor} hover:bg-gray-100 whitespace-nowrap`}
         >
             Sign Out
         </button>
